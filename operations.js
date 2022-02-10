@@ -54,7 +54,7 @@ function Login(connection,data,callback){
 
 function InsertPelicula(connection,data,callback){
     let insertQuery =
-        "INSERT INTO Pelicula (Titulo,Director,YearPublicacion,EdadRequerida) VALUES (?,?,?,?)"
+        "INSERT INTO Pelicula (Titulo,Director,YearPublicacion,EdadRequeridad) VALUES (?,?,?,?)"
         let queryPeli = mysql.format(insertQuery,[data.Titulo,data.Director,data.Year,data.Edad]);
 
         connection.query(queryPeli,function(err,result){
@@ -62,6 +62,16 @@ function InsertPelicula(connection,data,callback){
             callback(result);
         })
 
+}
+
+function GetsPelicula(connection,callback){
+    let insertQuery = "Select * from Pelicula"
+        let queryGenero = mysql.format(insertQuery)
+
+        connection.query(queryGenero,function(err,result){
+            if(err) throw err;
+            callback(result);
+        })
 }
 
 //----------------------------|
@@ -152,8 +162,27 @@ function GetsActor(connection,callback){
 //------------------------------------|
 
 function InsertPeliculaxGenero(connection,data,callback){
-    let insertQuery = "INSERT INTO Genero(Nombre) Values (?)"
+    let insertQuery = "INSERT INTO GenerosXPelicula(idPelicula,idGenero) Values (?,?)"
+        let queryPxG = mysql.format(insertQuery,[data.idP,data.idG])
+
+        connection.query(queryPxG,function(err,result){
+            if(err) throw err;
+            callback(result);
+        })
 }
 
 
-module.exports = {Login,InsertUsuario,InsertPelicula,InsertPeliculaxGenero,InsertGenero,GetsGenero,InsertIdioma,GetsIdioma}
+//funcion en veremos:
+function GetsPeliculasxGenero(connection,data,callback){
+    //callback(data)
+    let GetsQuery = "Select * from GenerosxPelicula INNER JOIN Genero ON GenerosxPelicula.idGenero = Genero.idGenero"
+        let queryPeliculaxGenero = mysql.format(GetsQuery,[data])
+
+        connection.query(queryPeliculaxGenero,function(err,result){
+            if(err) throw err;
+            callback(result);
+        })
+}
+
+
+module.exports = {Login,InsertUsuario,InsertPelicula,InsertPeliculaxGenero,InsertGenero,GetsGenero,InsertIdioma,GetsIdioma,InsertActor,GetsActor,InsertPeliculaxGenero,GetsPelicula,GetsPeliculasxGenero}

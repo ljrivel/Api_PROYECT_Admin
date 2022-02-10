@@ -3,7 +3,7 @@ const app = express();
 const mysql = require("mysql");
 require("dotenv").config();
 
-const {InsertUsuario,Login, InsertGenero,GetsGenero,GetsIdioma,InsertIdioma} = require("./operations");
+const {InsertUsuario,Login, InsertGenero,GetsGenero,GetsIdioma,InsertIdioma,GetsActor,InsertActor,InsertPeliculaxGenero,InsertPelicula,GetsPelicula,GetsPeliculasxGenero} = require("./operations");
 
 const cors=require("cors");
 const corsOptions ={
@@ -53,7 +53,7 @@ app.get("/InsertUsuario", (req, res) => {
  //GENERO
 
  app.get("/insertgenero", (req, res) => {
-  const body = "Comedia"
+  const body = "Accion"
   InsertGenero(connection,body,result =>{
     res.json(result);
   });
@@ -70,7 +70,7 @@ app.get("/InsertUsuario", (req, res) => {
  //IDIOMA
 
  app.get("/insertidioma", (req, res) => {
-  const body = "Ingles"
+  const body = "Espanol"
   InsertIdioma(connection,body,result =>{
     res.json(result);
   });
@@ -84,6 +84,53 @@ app.get("/InsertUsuario", (req, res) => {
  });
 
 
+ //Pelicula
+
+ app.get("/insertpelicula", (req, res) => {
+  const body = {Titulo:"F&F9",Director:"William",Year:"2002",Edad:18}
+  InsertPelicula(connection,body,result =>{
+    res.json(result);
+  });
+ });
+
+
+ app.get("/getspelicula", (req, res) => {
+  GetsPelicula(connection,result =>{
+    res.json(result);
+  });
+ });
+
+
+
+ //Actores
+
+ app.get("/insertactor", (req, res) => {
+  const body = "William"
+  InsertActor(connection,body,result =>{
+    res.json(result);
+  });
+ });
+
+
+ app.get("/getsactor", (req, res) => {
+  GetsActor(connection,result =>{
+    res.json(result);
+  });
+ });
+
+ app.get("/insertPxG", (req, res) => {
+   const data = {idP:1,idG:1}
+  InsertPeliculaxGenero(connection,data,result =>{
+    res.json(result);
+  });
+ });
+
+ app.get("/getsPxG", (req, res) => {
+  const data = "Accion"
+ GetsPeliculasxGenero(connection,data,result =>{
+   res.json(result);
+ });
+});
 
 app.listen(3000, () => {
   console.log("Servidor en puerto 3000 ... ");
