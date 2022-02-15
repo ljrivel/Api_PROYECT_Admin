@@ -124,6 +124,7 @@ function GetsIdioma(connection,callback){
             if(err) throw err;
             callback(result);
         })
+        
 }
 
 //----------------------------|
