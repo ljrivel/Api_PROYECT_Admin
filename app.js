@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const port = process.env.port || 3000
 const mysql = require("mysql");
 require("dotenv").config();
 
@@ -53,7 +54,7 @@ app.get("/InsertUsuario", (req, res) => {
  //GENERO
 
  app.get("/insertgenero", (req, res) => {
-  const body = "Accion"
+  const body = "Suspenso"
   InsertGenero(connection,body,result =>{
     res.json(result);
   });
@@ -132,6 +133,6 @@ app.get("/InsertUsuario", (req, res) => {
  });
 });
 
-app.listen(3000, () => {
-  console.log("Servidor en puerto 3000 ... ");
+app.listen(port, () => {
+  console.log(`Servidor en puerto ${port}`);
 });
