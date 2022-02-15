@@ -1,32 +1,14 @@
-const express = require("express");
-const app = express();
-const port = process.env.port || 3000
-const mysql = require("mysql");
+
 require("dotenv").config();
+const express = require('express');
+const app = express();
+const connection = require('./mysql');
+
+const port = process.env.port || 3000
+
+
 
 const {InsertUsuario,Login, InsertGenero,GetsGenero,GetsIdioma,InsertIdioma,GetsActor,InsertActor,InsertPeliculaxGenero,InsertPelicula,GetsPelicula,GetsPeliculasxGenero} = require("./operations");
-
-const cors=require("cors");
-const corsOptions ={
-   origin:'*',
-   credentials:true,            //access-control-allow-credentials:true
-   optionSuccessStatus:200,
-}
-
-app.use(cors(corsOptions))
-
-const connection = mysql.createConnection({
-    host: process.env.DBHOST,
-    user: process.env.DBUSER,
-    password: process.env.DBPASSWORD,
-    database: process.env.DBDATABASE,
-});
-
-connection.connect((err) =>{
-  if (err) throw err;
-  console.log("Connected to database");
-});
-
 
 app.use(express.json());
 
