@@ -29,19 +29,20 @@ app.get("/", (req, res) => {
 
 //USUARIO
 
-app.get("/Login", (req, res) => {
-  const body = {Usuario: "lj@gmail.com", Password:"lrivel" }
+app.post("/Login", (req, res) => {
+  const body = req.body
   Login(connection,body,result =>{
     res.json(result);
   });
  });
 
-app.get("/InsertUsuario", (req, res) => {
-  const body = {TipoUsuario:1 ,Cedula:"23",Nombre:"Luis", Apellido1:"Rivel", Apellido2:"Oviedo", FechaNacimiento:'2002-10-16 0:0:0',Edad:20, Email:"lj@gmail.com", Password:"lrivel", EsquemaVacunacion:2}
+ app.post("/InsertUsuario", (req, res) => {
+  const body = req.body
   InsertUsuario(connection,body,result =>{
     res.json(result);
   });
  });
+
 
  //GENERO
 
