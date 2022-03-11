@@ -88,6 +88,17 @@ function GetsPelicula(connection,callback){
         })
 }
 
+function GetPelicula(connection,data,callback){
+        let Titulo = data.Titulo;
+        let insertQuery = "Select * from Pelicula where Titulo=?"
+        let queryGenero = mysql.format(insertQuery,[Titulo])
+
+        connection.query(queryGenero,function(err,result){
+            if(err) throw err;
+            callback(result);
+        })
+}
+
 //----------------------------|
 //                            |
 // Funciones de tabla Genero  |
@@ -200,4 +211,5 @@ function GetsPeliculasxGenero(connection,data,callback){
 }
 
 
-module.exports = {Login,InsertUsuario,InsertPelicula,InsertPeliculaxGenero,InsertGenero,GetsGenero,InsertIdioma,GetsIdioma,InsertActor,GetsActor,InsertPeliculaxGenero,GetsPelicula,GetsPeliculasxGenero,getUser}
+module.exports = {Login,InsertUsuario,InsertPelicula,InsertPeliculaxGenero,InsertGenero,GetsGenero,InsertIdioma,GetsIdioma,InsertActor,
+    GetsActor,InsertPeliculaxGenero,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula}

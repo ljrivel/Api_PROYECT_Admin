@@ -7,7 +7,8 @@ const port = process.env.PORT || 3000
 
 
 
-const {InsertUsuario,Login, InsertGenero,GetsGenero,GetsIdioma,InsertIdioma,GetsActor,InsertActor,InsertPeliculaxGenero,InsertPelicula,GetsPelicula,GetsPeliculasxGenero,getUser} = require("./operations");
+const {InsertUsuario,Login, InsertGenero,GetsGenero,GetsIdioma,InsertIdioma,GetsActor,InsertActor,
+  InsertPeliculaxGenero,InsertPelicula,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula} = require("./operations");
 
 const cors=require("cors");
 const corsOptions ={
@@ -54,7 +55,7 @@ app.post("/Login", (req, res) => {
  //GENERO
 
  app.get("/insertgenero", (req, res) => {
-  const body = "Suspenso"
+  const body = req.body
   InsertGenero(connection,body,result =>{
     res.json(result);
   });
@@ -71,7 +72,7 @@ app.post("/Login", (req, res) => {
  //IDIOMA
 
  app.get("/insertidioma", (req, res) => {
-  const body = "Espanol"
+  const body = req.body
   InsertIdioma(connection,body,result =>{
     res.json(result);
   });
@@ -88,7 +89,7 @@ app.post("/Login", (req, res) => {
  //Pelicula
 
  app.get("/insertpelicula", (req, res) => {
-  const body = {Titulo:"F&F9",Director:"William",Year:"2002",Edad:18}
+  const body = req.body
   InsertPelicula(connection,body,result =>{
     res.json(result);
   });
@@ -101,12 +102,18 @@ app.post("/Login", (req, res) => {
   });
  });
 
+ app.get("/GetPelicula", (req, res) => {
+  const body = req.body
+  GetPelicula(connection,body,result =>{
+    res.json(result);
+  });
+ });
 
 
  //Actores
 
  app.get("/insertactor", (req, res) => {
-  const body = "William"
+  const body = req.body
   InsertActor(connection,body,result =>{
     res.json(result);
   });
@@ -127,7 +134,7 @@ app.post("/Login", (req, res) => {
  });
 
  app.get("/getsPxG", (req, res) => {
-  const data = "Accion"
+  const data = req.body
  GetsPeliculasxGenero(connection,data,result =>{
    res.json(result);
  });
