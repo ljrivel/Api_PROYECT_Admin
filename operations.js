@@ -46,6 +46,20 @@ function Login(connection,data,callback){
     })
 }
 
+function getUser(connection,data,callback){ 
+    const user = data.Usuario;
+    let loginQuery = "SELECT * FROM usuario WHERE Email =?"
+    let querylogin = mysql.format(loginQuery,[user]);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+}
+
+
 //-----------------------------|
 //                             |
 // Funciones de tabla Pelicula |
@@ -186,4 +200,4 @@ function GetsPeliculasxGenero(connection,data,callback){
 }
 
 
-module.exports = {Login,InsertUsuario,InsertPelicula,InsertPeliculaxGenero,InsertGenero,GetsGenero,InsertIdioma,GetsIdioma,InsertActor,GetsActor,InsertPeliculaxGenero,GetsPelicula,GetsPeliculasxGenero}
+module.exports = {Login,InsertUsuario,InsertPelicula,InsertPeliculaxGenero,InsertGenero,GetsGenero,InsertIdioma,GetsIdioma,InsertActor,GetsActor,InsertPeliculaxGenero,GetsPelicula,GetsPeliculasxGenero,getUser}
