@@ -104,6 +104,7 @@ app.post("/Login", (req, res) => {
 
  app.post("/GetPelicula", (req, res) => {
   const body = req.body
+  console.log(body);
   GetPelicula(connection,body,result =>{
     res.json(result);
   });
