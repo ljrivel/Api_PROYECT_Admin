@@ -90,6 +90,7 @@ function GetsPelicula(connection,callback){
 
 function GetPelicula(connection,data,callback){
         let id = data.idPelicula;
+        console.log(data);
         console.log(id);
         let insertQuery = "Select * from Pelicula where idPelicula=?"
         let queryGenero = mysql.format(insertQuery,[id])

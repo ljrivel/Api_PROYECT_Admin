@@ -31,8 +31,8 @@ app.get("/", (req, res) => {
 //USUARIO
 
 app.post("/Login", (req, res) => {
-  console.log(body);
   const body = req.body
+  console.log(body);
   Login(connection,body,result =>{
     res.json(result);
   });
