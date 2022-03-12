@@ -89,9 +89,9 @@ function GetsPelicula(connection,callback){
 }
 
 function GetPelicula(connection,data,callback){
-        let Titulo = data.Titulo;
-        let insertQuery = "Select * from Pelicula where Titulo=?"
-        let queryGenero = mysql.format(insertQuery,[Titulo])
+        let id = data.id;
+        let insertQuery = "Select * from Pelicula where idPelicula=?"
+        let queryGenero = mysql.format(insertQuery,[id])
 
         connection.query(queryGenero,function(err,result){
             if(err) throw err;
