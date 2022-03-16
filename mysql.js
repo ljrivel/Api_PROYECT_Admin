@@ -5,6 +5,6 @@ const mysql = require('mysql');
 const connection = mysql.createPool(database);
    
 // Conectamos a la base de datos
-connection.connect();
+connection.createPool();
 
 module.exports = connection;
