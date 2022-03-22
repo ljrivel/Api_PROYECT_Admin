@@ -127,7 +127,7 @@ function GetPelicula(connection,data,callback){
 
 function changePelicula(connection,data,callback){
     const user = data.idPelicula;
-    let loginQuery = "UPDATE usuario SET Titulo =?,Director=?,YearPublicacion=?,EdadRequerida=?,URL=? WHERE idUsuario =? "
+    let loginQuery = "UPDATE pelicula SET Titulo=?,Director=?,YearPublicacion=?,EdadRequerida=?,URL=? WHERE idUsuario =? "
     let querylogin = mysql.format(loginQuery,[data.Titulo,data.Director,data.YearPublicacion,data.EdadRequerida,data.URL,user]);
     
     connection.query(querylogin,function(err,result){
