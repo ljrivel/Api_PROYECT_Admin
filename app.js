@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000
 
 
 const {InsertUsuario,Login, InsertGenero,GetsGenero,GetsIdioma,InsertIdioma,GetsActor,InsertActor,
-  InsertPeliculaxGenero,InsertPelicula,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula} = require("./operations");
+  InsertPeliculaxGenero,InsertPelicula,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula,changePelicula} = require("./operations");
 
 const cors=require("cors");
 const corsOptions ={
@@ -136,6 +136,14 @@ app.post("/Login", (req, res) => {
  app.get("/getsPxG", (req, res) => {
   const data = req.body
  GetsPeliculasxGenero(connection,data,result =>{
+   res.json(result);
+ });
+});
+
+
+app.get("/changePelicula", (req, res) => {
+  const data = {Titulo:'Maze runner',Director:'William',YearPublicacion:2024,EdadRequerida:12,URL:'https://i.postimg.cc/cLDhxB9G/moonfall-lionsgate.jpg',idPelicula:34}
+ changePelicula(connection,data,result =>{
    res.json(result);
  });
 });

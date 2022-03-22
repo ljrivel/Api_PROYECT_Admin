@@ -59,6 +59,31 @@ function getUser(connection,data,callback){
     })
 }
 
+function deleteUser(connection,data,callback){
+    const user = data.id;
+    let loginQuery = "DELETE FROM usuario WHERE idUsuario =?"
+    let querylogin = mysql.format(loginQuery,[user]);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+}
+
+function changeUser(connection,data,callback){
+    const user = data.id;
+    let loginQuery = "UPDATE usuario SET (TipoUsuario,NumeroCedula,Nombre,Apellido1,Apellido2,FechaNacimiento,Edad,Email,Password,EsquemaVacunacion) WHERE idUsuario =? "
+    let querylogin = mysql.format(loginQuery,[user]);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+}
 
 //-----------------------------|
 //                             |
@@ -97,6 +122,20 @@ function GetPelicula(connection,data,callback){
             if(err) throw err;
             callback(result);
         })
+}
+
+
+function changePelicula(connection,data,callback){
+    const user = data.idPelicula;
+    let loginQuery = "UPDATE usuario SET Titulo =?,Director=?,YearPublicacion=?,EdadRequerida=?,URL=? WHERE idUsuario =? "
+    let querylogin = mysql.format(loginQuery,[data.Titulo,data.Director,data.YearPublicacion,data.EdadRequerida,data.URL,user]);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
 }
 
 //----------------------------|
@@ -212,4 +251,4 @@ function GetsPeliculasxGenero(connection,data,callback){
 
 
 module.exports = {Login,InsertUsuario,InsertPelicula,InsertPeliculaxGenero,InsertGenero,GetsGenero,InsertIdioma,GetsIdioma,InsertActor,
-    GetsActor,InsertPeliculaxGenero,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula}
+    GetsActor,InsertPeliculaxGenero,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula,changePelicula}
