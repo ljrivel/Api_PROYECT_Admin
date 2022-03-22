@@ -48,7 +48,7 @@ function Login(connection,data,callback){
 
 function getUser(connection,data,callback){ 
     const user = data.Usuario;
-    let loginQuery = "SELECT * FROM usuario WHERE Email =?"
+    let loginQuery = "SELECT * FROM usuario WHERE idUsuario =?"
     let querylogin = mysql.format(loginQuery,[user]);
     
     connection.query(querylogin,function(err,result){
