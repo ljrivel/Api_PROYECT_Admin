@@ -59,6 +59,19 @@ function getUser(connection,data,callback){
     })
 }
 
+function getUsers(connection,callback){ 
+
+    let loginQuery = "SELECT * FROM usuario WHERE TipoUsuario=1"
+    let querylogin = mysql.format(loginQuery);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+}
+
 function deleteUser(connection,data,callback){
     const user = data.id;
     let loginQuery = "DELETE FROM usuario WHERE idUsuario =?"
@@ -251,4 +264,4 @@ function GetsPeliculasxGenero(connection,data,callback){
 
 
 module.exports = {Login,InsertUsuario,InsertPelicula,InsertPeliculaxGenero,InsertGenero,GetsGenero,InsertIdioma,GetsIdioma,InsertActor,
-    GetsActor,InsertPeliculaxGenero,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula,changePelicula}
+    GetsActor,InsertPeliculaxGenero,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula,changePelicula,getUsers}

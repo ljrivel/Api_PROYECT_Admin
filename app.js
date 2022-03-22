@@ -8,7 +8,8 @@ const port = process.env.PORT || 3000
 
 
 const {InsertUsuario,Login, InsertGenero,GetsGenero,GetsIdioma,InsertIdioma,GetsActor,InsertActor,
-  InsertPeliculaxGenero,InsertPelicula,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula,changePelicula} = require("./operations");
+  InsertPeliculaxGenero,InsertPelicula,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula,
+  changePelicula,getUsers} = require("./operations");
 
 const cors=require("cors");
 const corsOptions ={
@@ -40,6 +41,14 @@ app.post("/Login", (req, res) => {
  app.post("/GetUser", (req, res) => {
   const body = req.body
   getUser(connection,body,result =>{
+    res.json(result);
+  });
+ });
+
+
+ app.get("/GetUsers", (req, res) => {
+
+  getUsers(connection,result =>{
     res.json(result);
   });
  });
