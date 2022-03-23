@@ -31,24 +31,33 @@ function Login(connection,data,callback){
         if(result[0] == null){
             callback(false);
         }
-
         else{
 
             if (result[0].Password == pass){
                 callback(true);
             }
-
             else{
                 callback(false);
             }
         }
-
     })
 }
 
 function getUser(connection,data,callback){ 
     const user = data.Usuario;
     let loginQuery = "SELECT * FROM usuario WHERE idUsuario =?"
+    let querylogin = mysql.format(loginQuery,[user]);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+}
+function getUserLogin(connection,data,callback){ 
+    const user = data.Usuario;
+    let loginQuery = "SELECT * FROM usuario WHERE Email =?"
     let querylogin = mysql.format(loginQuery,[user]);
     
     connection.query(querylogin,function(err,result){
@@ -86,9 +95,10 @@ function deleteUser(connection,data,callback){
 }
 
 function changeUser(connection,data,callback){
-    const user = data.id;
+    const user = data.idUsuario;
     let loginQuery = "UPDATE usuario SET (TipoUsuario,NumeroCedula,Nombre,Apellido1,Apellido2,FechaNacimiento,Edad,Email,Password,EsquemaVacunacion) WHERE idUsuario =? "
-    let querylogin = mysql.format(loginQuery,[user]);
+    let querylogin = mysql.format(loginQuery,[data.TipoUsuario,data.NumeroCedula,data.Nombre,data.Apellido1,data.Apellido2,data.Apellido1,
+        data.Apellido2,data.FechaNacimiento,data.Edad,data.Email,data.Password,data.EsquemaVacunacion,user]);
     
     connection.query(querylogin,function(err,result){
         if(err) throw err;
@@ -142,6 +152,20 @@ function changePelicula(connection,data,callback){
     const user = data.idPelicula;
     let loginQuery = "UPDATE pelicula SET Titulo=?,Director=?,YearPublicacion=?,EdadRequerida=?,URL=? WHERE idPelicula =? "
     let querylogin = mysql.format(loginQuery,[data.Titulo,data.Director,data.YearPublicacion,data.EdadRequerida,data.URL,user]);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+}
+
+
+function deletePelicula(connection,data,callback){
+    const user = data.id;
+    let loginQuery = "Update FROM pelicula set estado=false WHERE idPelicula =?"
+    let querylogin = mysql.format(loginQuery,[user]);
     
     connection.query(querylogin,function(err,result){
         if(err) throw err;
@@ -264,4 +288,5 @@ function GetsPeliculasxGenero(connection,data,callback){
 
 
 module.exports = {Login,InsertUsuario,InsertPelicula,InsertPeliculaxGenero,InsertGenero,GetsGenero,InsertIdioma,GetsIdioma,InsertActor,
-    GetsActor,InsertPeliculaxGenero,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula,changePelicula,getUsers}
+    GetsActor,InsertPeliculaxGenero,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula,changePelicula,getUsers,getUserLogin,changeUser,
+    deleteUser,deletePelicula}

@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000
 
 const {InsertUsuario,Login, InsertGenero,GetsGenero,GetsIdioma,InsertIdioma,GetsActor,InsertActor,
   InsertPeliculaxGenero,InsertPelicula,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula,
-  changePelicula,getUsers} = require("./operations");
+  changePelicula,getUsers,getUserLogin,changeUser,deleteUser,deletePelicula} = require("./operations");
 
 const cors=require("cors");
 const corsOptions ={
@@ -23,20 +23,27 @@ app.use(cors(corsOptions))
 app.use(express.json());
 
 
-
 app.get("/", (req, res) => {
  res.send("Hello World");
 });
 
 
 //USUARIO
-
 app.post("/Login", (req, res) => {
   const body = req.body
   Login(connection,body,result =>{
     res.json(result);
   });
  });
+
+
+ app.post("/GetUserLogin", (req, res) => {
+  const body = req.body
+  getUserLogin(connection,body,result =>{
+    res.json(result);
+  });
+ });
+
 
  app.post("/GetUser", (req, res) => {
   const body = req.body
@@ -45,9 +52,22 @@ app.post("/Login", (req, res) => {
   });
  });
 
+ app.post("/changeUser", (req, res) => {
+  const body = req.body
+  changeUser(connection,body,result =>{
+    res.json(result);
+  });
+ });
+
+ app.post("/deleteUser", (req, res) => {
+  const body = req.body
+  deleteUser(connection,body,result =>{
+    res.json(result);
+  });
+ });
+
 
  app.get("/GetUsers", (req, res) => {
-
   getUsers(connection,result =>{
     res.json(result);
   });
@@ -70,6 +90,7 @@ app.post("/Login", (req, res) => {
   });
  });
 
+ 
 
  app.get("/getsgenero", (req, res) => {
   GetsGenero(connection,result =>{
@@ -118,6 +139,20 @@ app.post("/Login", (req, res) => {
   });
  });
 
+ 
+app.post("/changePelicula", (req,res) => {
+  const data = req.body
+ changePelicula(connection,data,result =>{
+   res.json(result);
+ });
+});
+ 
+ app.post("/deletePelicula", (req, res) => {
+  const body = req.body
+  deletePelicula(connection,body,result =>{
+    res.json(result);
+  });
+ });
 
  //Actores
 
@@ -150,12 +185,6 @@ app.post("/Login", (req, res) => {
 });
 
 
-app.get("/changePelicula", (req, res) => {
-  const data = {Titulo:'Maze runner',Director:'William',YearPublicacion:2024,EdadRequerida:12,URL:'https://i.postimg.cc/cLDhxB9G/moonfall-lionsgate.jpg',idPelicula:34}
- changePelicula(connection,data,result =>{
-   res.json(result);
- });
-});
 
 app.listen(port, () => {
   console.log(`Servidor en puerto ${port}`);
