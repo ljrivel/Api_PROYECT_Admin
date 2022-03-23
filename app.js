@@ -39,6 +39,7 @@ app.post("/Login", (req, res) => {
 
  app.post("/GetUserLogin", (req, res) => {
   const body = req.body
+  console.log(body);
   getUserLogin(connection,body,result =>{
     res.json(result);
   });
