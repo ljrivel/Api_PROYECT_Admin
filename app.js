@@ -54,6 +54,7 @@ app.post("/Login", (req, res) => {
  });
 
  app.post("/changeUser", (req, res) => {
+  res.header("Access-Control-Allow-Origin", '*');
   const body = req.body
   changeUser(connection,body,result =>{
     res.json(result);
