@@ -12,20 +12,12 @@ const {InsertUsuario,Login, InsertGenero,GetsGenero,GetsIdioma,InsertIdioma,Gets
   changePelicula,getUsers,getUserLogin,changeUser,deleteUser,deletePelicula} = require("./operations");
 
 const cors=require("cors");
-
-
-const whitelist = ["http://localhost:4200"]
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error("Not allowed by CORS"))
-    }
-  },
-  credentials: true,
+const corsOptions ={
+   origin:'*',
+   credentials:true,            //access-control-allow-credentials:true
+   optionSuccessStatus:200,
 }
-app.use(cors(corsOptions))
+
 app.use(cors(corsOptions))
 
 app.use(express.json());
@@ -63,6 +55,7 @@ app.post("/Login", (req, res) => {
 
  app.post("/changeUser", (req, res) => {
   const body = req.body
+  console.log(body)
   changeUser(connection,body,result =>{
     res.json(result);
   });
