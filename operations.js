@@ -19,20 +19,20 @@ function emailPassword(data){
         port: "587",
         auth:{
             user: "thanosmoraproject@gmail.com",
-            pass: "Thanos2201"
+            pass: "qhasodoqjzikiysn"
         },
     })
     let hmtl = fs.readFileSync('password.html','utf8');
     let template = Handlebars.compile(hmtl);
     let information = {
-        Name: "Luis",
-        password: "pepe1213"
+        Name: name,
+        password: data.Password
     };
     let htmlSend = template(information);
 
     transporter.sendMail({
         form: "Cinepolis",
-        to: "ljrivel16@gmail.com",
+        to: data.Email,
         subject: "Password account Cinepolis",
         html: htmlSend
     });
