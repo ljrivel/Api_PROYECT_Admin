@@ -127,7 +127,7 @@ function getUsers(connection,callback){
 
 function deleteUser(connection,data,callback){
     const user = data.id;
-    let loginQuery = "UPDATE FROM usuario set Activo=0 WHERE idUsuario =?"
+    let loginQuery = "UPDATE usuario set Activo=0 WHERE idUsuario =?"
     let querylogin = mysql.format(loginQuery,[user]);
     
     connection.query(querylogin,function(err,result){
@@ -206,7 +206,7 @@ function changePelicula(connection,data,callback){
 
 function deletePelicula(connection,data,callback){
     const user = data.id;
-    let loginQuery = "Update FROM pelicula set Activo=0 WHERE idPelicula =?"
+    let loginQuery = "Update pelicula set Activo=0 WHERE idPelicula =?"
     let querylogin = mysql.format(loginQuery,[user]);
     
     connection.query(querylogin,function(err,result){
@@ -311,7 +311,7 @@ function getProductoComida(connection,callback){
 
 function deleteProducto(connection,data,callback){ 
     const user = data.Usuario;
-    let loginQuery = "Update FROM Producto set Activo=0 WHERE idProducto=?"
+    let loginQuery = "Update  Producto set Activo=0 WHERE idProducto=?"
     let querylogin = mysql.format(loginQuery,[user]);
     
     connection.query(querylogin,function(err,result){
