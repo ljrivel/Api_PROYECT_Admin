@@ -190,6 +190,17 @@ function GetPelicula(connection,data,callback){
 }
 
 
+function GetCartelera(connection,callback){
+    let insertQuery = "SELECT  P.Titulo,P.idPelicula,P.Generos FROM Cartelera C INNER JOIN Pelicula P ON P.idPelicula = C.idPelicula WHERE TIMESTAMPDIFF(MINUTE, NOW(), C.Inicio) < 0"
+    let queryGenero = mysql.format(insertQuery,[id])
+
+    connection.query(queryGenero,function(err,result){
+        if(err) throw err;
+        callback(result);
+    })
+}
+
+
 function changePelicula(connection,data,callback){
     const user = data.idPelicula;
     let loginQuery = "UPDATE pelicula SET Titulo=?,Director=?,YearPublicacion=?,EdadRequerida=?,URL=? WHERE idPelicula =? "
@@ -326,4 +337,4 @@ function deleteProducto(connection,data,callback){
 
 module.exports = {Login,InsertUsuario,InsertPelicula,GetsPelicula,getUser,GetPelicula,changePelicula,getUsers,getUserLogin,changeUser,
     deleteUser,deletePelicula,registerUsuario,getsProducto,deleteProducto,getProductoBebida,getProductoCombo,getProductoComida,InsertProducto,
-    changeProducto,getProducto}
+    changeProducto,getProducto,GetCartelera}

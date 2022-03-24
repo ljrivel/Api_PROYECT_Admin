@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000
 const {InsertUsuario,Login, InsertPelicula,GetsPelicula,getUser,GetPelicula,
   changePelicula,getUsers,getUserLogin,changeUser,deleteUser,deletePelicula,
   registerUsuario,getsProducto,deleteProducto,getProductoBebida,getProductoCombo,
-  getProductoComida,InsertProducto,changeProducto,getProducto} = require("./operations");
+  getProductoComida,InsertProducto,changeProducto,getProducto,GetCartelera} = require("./operations");
 
 const cors=require("cors");
 const corsOptions ={
@@ -105,6 +105,12 @@ app.post("/Login", (req, res) => {
   });
  });
 
+ app.get("/getcartelera", (req, res) => {
+  GetCartelera(connection,result =>{
+    res.json(result);
+  });
+ });
+
  app.post("/GetPelicula", (req, res) => {
   const body = req.body
   GetPelicula(connection,body,result =>{
@@ -150,7 +156,13 @@ app.post("/changePelicula", (req,res) => {
   });
  });
 
- app.get("/getsproductobebida", (req, res) => {
+ app.post("/getsproducto", (req, res) => {
+ getsProducto(connection,result =>{
+   res.json(result);
+ });
+});
+
+ app.get("/getproductobebida", (req, res) => {
   getProductoBebida(connection,result =>{
     res.json(result);
   });
@@ -162,7 +174,7 @@ app.post("/changePelicula", (req,res) => {
   });
  });
 
- app.get("/getsproductocombo", (req, res) => {
+ app.get("/getproductocombo", (req, res) => {
   getProductoCombo(connection,result =>{
     res.json(result);
   });
