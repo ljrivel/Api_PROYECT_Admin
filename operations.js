@@ -192,7 +192,7 @@ function GetPelicula(connection,data,callback){
 
 function GetCartelera(connection,callback){
     let insertQuery = "SELECT  P.Titulo,P.idPelicula,P.Generos FROM Cartelera C INNER JOIN Pelicula P ON P.idPelicula = C.idPelicula WHERE TIMESTAMPDIFF(MINUTE, NOW(), C.Inicio) < 0"
-    let queryGenero = mysql.format(insertQuery,[id])
+    let queryGenero = mysql.format(insertQuery)
 
     connection.query(queryGenero,function(err,result){
         if(err) throw err;
