@@ -41,8 +41,8 @@ function emailPassword(data){
 
 function registerUsuario(connection,data,callback){
     let insertQuery =   
-        "INSERT INTO Usuario (TipoUsuario,NumeroCedula,Nombre,Apellido1,Apellido2,FechaNacimiento,Edad,Email,Password,EsquemaVacunacion) VALUES (?,?,?,?,?,?,?,?,?,?)"
-        let queryusers = mysql.format(insertQuery,[data.TipoUsuario,data.Cedula,data.Nombre,data.Apellido1,data.Apellido2,data.FechaNacimiento,data.Edad,data.Email,data.Password,data.EsquemaVacunacion]);
+        "INSERT INTO Usuario (TipoUsuario,NumeroCedula,Nombre,Apellido1,Apellido2,FechaNacimiento,Edad,Email,Password,EsquemaVacunacion,Activo) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
+        let queryusers = mysql.format(insertQuery,[data.TipoUsuario,data.Cedula,data.Nombre,data.Apellido1,data.Apellido2,data.FechaNacimiento,data.Edad,data.Email,data.Password,data.EsquemaVacunacion,data.Activo]);
 
     connection.query(queryusers,function(err,result){
         if(err) throw err;
@@ -54,8 +54,8 @@ function registerUsuario(connection,data,callback){
 
 function InsertUsuario(connection,data,callback){
     let insertQuery =   
-        "INSERT INTO Usuario (TipoUsuario,NumeroCedula,Nombre,Apellido1,Apellido2,FechaNacimiento,Edad,Email,Password,EsquemaVacunacion) VALUES (?,?,?,?,?,?,?,?,?,?)"
-        let queryusers = mysql.format(insertQuery,[data.TipoUsuario,data.Cedula,data.Nombre,data.Apellido1,data.Apellido2,data.FechaNacimiento,data.Edad,data.Email,data.Password,data.EsquemaVacunacion]);
+    "INSERT INTO Usuario (TipoUsuario,NumeroCedula,Nombre,Apellido1,Apellido2,FechaNacimiento,Edad,Email,Password,EsquemaVacunacion,Activo) VALUES (?,?,?,?,?,?,?,?,?,?,?)"
+    let queryusers = mysql.format(insertQuery,[data.TipoUsuario,data.Cedula,data.Nombre,data.Apellido1,data.Apellido2,data.FechaNacimiento,data.Edad,data.Email,data.Password,data.EsquemaVacunacion,data.Activo]);
 
     connection.query(queryusers,function(err,result){
         if(err) throw err;
@@ -114,7 +114,7 @@ function getUserLogin(connection,data,callback){
 
 function getUsers(connection,callback){ 
 
-    let loginQuery = "SELECT * FROM usuario WHERE TipoUsuario=1"
+    let loginQuery = "SELECT * FROM usuario WHERE TipoUsuario=1 and Activo=1"
     let querylogin = mysql.format(loginQuery);
     
     connection.query(querylogin,function(err,result){
@@ -127,7 +127,7 @@ function getUsers(connection,callback){
 
 function deleteUser(connection,data,callback){
     const user = data.id;
-    let loginQuery = "DELETE FROM usuario WHERE idUsuario =?"
+    let loginQuery = "UPDATE FROM usuario set Activo=0 WHERE idUsuario =?"
     let querylogin = mysql.format(loginQuery,[user]);
     
     connection.query(querylogin,function(err,result){
@@ -140,9 +140,9 @@ function deleteUser(connection,data,callback){
 
 function changeUser(connection,data,callback){
     const user = data.idUsuario;
-    let loginQuery = "UPDATE usuario SET TipoUsuario=?,NumeroCedula=?,Nombre=?,Apellido1=?,Apellido2=?,FechaNacimiento=?,Edad=?,Email=?,Password=?,EsquemaVacunacion=? WHERE idUsuario =? "
+    let loginQuery = "UPDATE usuario SET TipoUsuario=?,NumeroCedula=?,Nombre=?,Apellido1=?,Apellido2=?,FechaNacimiento=?,Edad=?,Email=?,Password=?,EsquemaVacunacion=?,Activo=? WHERE idUsuario =? "
     let querylogin = mysql.format(loginQuery,[data.TipoUsuario,data.NumeroCedula,data.Nombre,data.Apellido1,data.Apellido2,data.FechaNacimiento,
-        data.Edad,data.Email,data.Password,data.EsquemaVacunacion,user]);
+        data.Edad,data.Email,data.Password,data.EsquemaVacunacion,data.Activo,user]);
     connection.query(querylogin,function(err,result){
         if(err) throw err;
 
@@ -159,8 +159,8 @@ function changeUser(connection,data,callback){
 
 function InsertPelicula(connection,data,callback){
     let insertQuery =
-        "INSERT INTO Pelicula (Titulo,Director,YearPublicacion,EdadRequerida,URL) VALUES (?,?,?,?,?)"
-        let queryPeli = mysql.format(insertQuery,[data.Titulo,data.Director,data.YearPublicacion,data.EdadRequerida,data.URL]);
+        "INSERT INTO Pelicula (Titulo,Director,YearPublicacion,EdadRequerida,URL,Generos,Actores,Duracion,Activo) VALUES (?,?,?,?,?,?,?,?,?)"
+        let queryPeli = mysql.format(insertQuery,[data.Titulo,data.Director,data.YearPublicacion,data.EdadRequerida,data.URL,data.Generos,data.Actores,data.Duracion,data.Activo]);
         connection.query(queryPeli,function(err,result){
             if(err) throw err;
             callback(result);
@@ -169,7 +169,7 @@ function InsertPelicula(connection,data,callback){
 }
 
 function GetsPelicula(connection,callback){
-    let insertQuery = "Select * from Pelicula"
+    let insertQuery = "Select * from Pelicula where Activo=1"
         let queryGenero = mysql.format(insertQuery)
 
         connection.query(queryGenero,function(err,result){
@@ -206,7 +206,7 @@ function changePelicula(connection,data,callback){
 
 function deletePelicula(connection,data,callback){
     const user = data.id;
-    let loginQuery = "Update FROM pelicula set estado=false WHERE idPelicula =?"
+    let loginQuery = "Update FROM pelicula set Activo=0 WHERE idPelicula =?"
     let querylogin = mysql.format(loginQuery,[user]);
     
     connection.query(querylogin,function(err,result){
@@ -217,118 +217,113 @@ function deletePelicula(connection,data,callback){
     })
 }
 
-//----------------------------|
-//                            |
-// Funciones de tabla Genero  |
-//                            |
-//----------------------------|
 
-function InsertGenero(connection,Nombre,callback){
-    let insertQuery = "INSERT INTO Genero(Nombre) Values (?)"
-        let queryGenero = mysql.format(insertQuery,[Nombre])
+//-----------------------------|
+//                             |
+// Funciones de tabla producto |
+//                             |
+//-----------------------------|
 
-        connection.query(queryGenero,function(err,result){
-            if(err) throw err;
-            callback(result);
-        })
+
+
+function InsertProducto(connection,data,callback){
+    let insertQuery =   
+    "INSERT INTO Producto (Activo,TipoProducto,Nombre,Precio,CantidaEnStock,URL) VALUES (?,?,?,?,?,?)"
+    let queryusers = mysql.format(insertQuery,[data.Activo]);
+
+    connection.query(queryusers,function(err,result){
+        if(err) throw err;
+        callback(result);
+    })
 }
 
-function GetsGenero(connection,callback){
-    let insertQuery = "Select * from Genero"
-        let queryGenero = mysql.format(insertQuery)
+function changeProducto(connection,data,callback){
+    let insertQuery =   
+    "INSERT INTO Producto Activo=?,TipoProducto=?,Nombre=?,Precio=?,CantidaEnStock=?,URL=? where idProducto=?"
+    let queryusers = mysql.format(insertQuery,[data.Activo,data.TipoProducto,data.Nombre,data.Precio,data.CantidaEnStock,data.URL,data.idProducto]);
 
-        connection.query(queryGenero,function(err,result){
-            if(err) throw err;
-            callback(result);
-        })
-}
-
-//----------------------------|
-//                            |
-// Funciones de tabla Idioma  |
-//                            |
-//----------------------------|
-
-function InsertIdioma(connection,Nombre,callback){
-    let insertQuery = "INSERT INTO Idioma(Nombre) Values (?)"
-        let queryGenero = mysql.format(insertQuery,[Nombre])
-
-        connection.query(queryGenero,function(err,result){
-            if(err) throw err;
-            callback(result);
-        })
-}
-
-function GetsIdioma(connection,callback){
-    let insertQuery = "Select * from Idioma"
-        let queryGenero = mysql.format(insertQuery)
-
-        connection.query(queryGenero,function(err,result){
-            if(err) throw err;
-            callback(result);
-        })
-        
-}
-
-//----------------------------|
-//                            |
-// Funciones de tabla Actor   |
-//                            |
-//----------------------------|
-
-function InsertActor(connection,Nombre,callback){
-    let insertQuery = "INSERT INTO Actor(Nombre) Values (?)"
-        let queryGenero = mysql.format(insertQuery,[Nombre])
-
-        connection.query(queryGenero,function(err,result){
-            if(err) throw err;
-            callback(result);
-        })
-}
-
-function GetsActor(connection,callback){
-    let insertQuery = "Select * from Actor"
-        let queryGenero = mysql.format(insertQuery)
-
-        connection.query(queryGenero,function(err,result){
-            if(err) throw err;
-            callback(result);
-        })
+    connection.query(queryusers,function(err,result){
+        if(err) throw err;
+        callback(result);
+    })
 }
 
 
+function getsProducto(connection,callback){ 
+    let loginQuery = "SELECT * FROM Producto WHERE Activo=1"
+    let querylogin = mysql.format(loginQuery);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
 
+        callback(result);
 
-//------------------------------------|
-//                                    |
-// Funciones de tabla PeliculaxGenero |
-//                                    |
-//------------------------------------|
+    })
+}
 
-function InsertPeliculaxGenero(connection,data,callback){
-    let insertQuery = "INSERT INTO GenerosXPelicula(idPelicula,idGenero) Values (?,?)"
-        let queryPxG = mysql.format(insertQuery,[data.idP,data.idG])
+function getProducto(connection,data,callback){ 
+    let loginQuery = "SELECT * FROM Producto WHERE Activo=1 and idProducto=?"
+    let querylogin = mysql.format(loginQuery,[data.Usuario]);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
 
-        connection.query(queryPxG,function(err,result){
-            if(err) throw err;
-            callback(result);
-        })
+        callback(result);
+
+    })
+}
+
+function getProductoCombo(connection,callback){ 
+    let loginQuery = "SELECT * FROM Producto WHERE Activo=1 and TipoProducto=0"
+    let querylogin = mysql.format(loginQuery);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+}
+
+function getProductoBebida(connection,callback){ 
+    let loginQuery = "SELECT * FROM Producto WHERE Activo=1 and TipoProducto=1"
+    let querylogin = mysql.format(loginQuery);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+}
+
+function getProductoComida(connection,callback){ 
+    let loginQuery = "SELECT * FROM Producto WHERE Activo=1 and TipoProducto=2"
+    let querylogin = mysql.format(loginQuery,);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+}
+
+function deleteProducto(connection,data,callback){ 
+    const user = data.Usuario;
+    let loginQuery = "Update FROM Producto set Activo=0 WHERE idProducto=?"
+    let querylogin = mysql.format(loginQuery,[user]);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
 }
 
 
-//funcion en veremos:
-function GetsPeliculasxGenero(connection,data,callback){
-    //callback(data)
-    let GetsQuery = "Select * from GenerosxPelicula INNER JOIN Genero ON GenerosxPelicula.idGenero = Genero.idGenero"
-        let queryPeliculaxGenero = mysql.format(GetsQuery,[data])
 
-        connection.query(queryPeliculaxGenero,function(err,result){
-            if(err) throw err;
-            callback(result);
-        })
-}
-
-
-module.exports = {Login,InsertUsuario,InsertPelicula,InsertPeliculaxGenero,InsertGenero,GetsGenero,InsertIdioma,GetsIdioma,InsertActor,
-    GetsActor,InsertPeliculaxGenero,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula,changePelicula,getUsers,getUserLogin,changeUser,
-    deleteUser,deletePelicula,registerUsuario}
+module.exports = {Login,InsertUsuario,InsertPelicula,GetsPelicula,getUser,GetPelicula,changePelicula,getUsers,getUserLogin,changeUser,
+    deleteUser,deletePelicula,registerUsuario,getsProducto,deleteProducto,getProductoBebida,getProductoCombo,getProductoComida,InsertProducto,
+    changeProducto,getProducto}

@@ -7,9 +7,10 @@ const port = process.env.PORT || 3000
 
 
 
-const {InsertUsuario,Login, InsertGenero,GetsGenero,GetsIdioma,InsertIdioma,GetsActor,InsertActor,
-  InsertPeliculaxGenero,InsertPelicula,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula,
-  changePelicula,getUsers,getUserLogin,changeUser,deleteUser,deletePelicula,registerUsuario} = require("./operations");
+const {InsertUsuario,Login, InsertPelicula,GetsPelicula,getUser,GetPelicula,
+  changePelicula,getUsers,getUserLogin,changeUser,deleteUser,deletePelicula,
+  registerUsuario,getsProducto,deleteProducto,getProductoBebida,getProductoCombo,
+  getProductoComida,InsertProducto,changeProducto,getProducto} = require("./operations");
 
 const cors=require("cors");
 const corsOptions ={
@@ -87,40 +88,6 @@ app.post("/Login", (req, res) => {
   });
  });
 
- //GENERO
-
- app.get("/insertgenero", (req, res) => {
-  const body = req.body
-  InsertGenero(connection,body,result =>{
-    res.json(result);
-  });
- });
-
- 
-
- app.get("/getsgenero", (req, res) => {
-  GetsGenero(connection,result =>{
-    res.json(result);
-  });
- });
-
-
- //IDIOMA
-
- app.get("/insertidioma", (req, res) => {
-  const body = req.body
-  InsertIdioma(connection,body,result =>{
-    res.json(result);
-  });
- });
-
-
- app.get("/getsidioma", (req, res) => {
-  GetsIdioma(connection,result =>{
-    res.json(result);
-  });
- });
-
 
  //Pelicula
 
@@ -160,35 +127,54 @@ app.post("/changePelicula", (req,res) => {
   });
  });
 
- //Actores
+ //Producto
 
- app.get("/insertactor", (req, res) => {
+ app.post("/insertproducto", (req, res) => {
   const body = req.body
-  InsertActor(connection,body,result =>{
+  InsertProducto(connection,body,result =>{
     res.json(result);
   });
  });
 
-
- app.get("/getsactor", (req, res) => {
-  GetsActor(connection,result =>{
+ app.post("/changeproducto", (req, res) => {
+  const body = req.body
+  changeProducto(connection,body,result =>{
     res.json(result);
   });
  });
 
- app.get("/insertPxG", (req, res) => {
-   const data = {idP:1,idG:1}
-  InsertPeliculaxGenero(connection,data,result =>{
+ app.post("/getproducto", (req, res) => {
+   const body = req.body
+  getProducto(connection,body,result =>{
     res.json(result);
   });
  });
 
- app.get("/getsPxG", (req, res) => {
-  const data = req.body
- GetsPeliculasxGenero(connection,data,result =>{
-   res.json(result);
+ app.get("/getsproductobebida", (req, res) => {
+  getProductoBebida(connection,result =>{
+    res.json(result);
+  });
  });
-});
+
+ app.get("/getproductocomida", (req, res) => {
+  getProductoComida(connection,result =>{
+    res.json(result);
+  });
+ });
+
+ app.get("/getsproductocombo", (req, res) => {
+  getProductoCombo(connection,result =>{
+    res.json(result);
+  });
+ });
+ 
+ app.post("/deleteproducto", (req, res) => {
+  const body = req.body
+  deleteProducto(connection,body,result =>{
+    res.json(result);
+  });
+ });
+ 
 
 
 
