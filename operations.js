@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-
+const nodemailer = require('nodemailer');
 
 
 //----------------------------|
@@ -7,9 +7,53 @@ const mysql = require('mysql');
 // Funciones de tabla Usuario |
 //                            |
 //----------------------------|
+
+
+
+
+function emailPassword(data,Password){
+    var name = data.Nombre + " " + data.Apellido1
+    let transporter = nodemailer.transporter({
+        host: "smtp.gmail.com",
+        port: "587",
+        auth:{
+            user: "thanosmoraproject@gmail.com",
+            pass: "Thanos2201"
+        },
+    })
+    let hmtl = fs.readFileSync('password.html','utf8');
+    let template = handlebars.compile(hmtl);
+    let information = {
+        Name: name,
+        password: Password
+    };
+    let htmlSend = template(information);
+
+    transporter.sendMail({
+        form: "Cinepolis",
+        to: data.Email,
+        subject: "Password account Cinepolis",
+        html: htmlSend
+    });
+
+}
+
+function registerUsuario(connection,data,callback){
+    var Password = Math.random().toString(36).slice(8);
+    let insertQuery =   
+        "INSERT INTO Usuario (TipoUsuario,NumeroCedula,Nombre,Apellido1,Apellido2,FechaNacimiento,Edad,Email,Password,EsquemaVacunacion) VALUES (?,?,?,?,?,?,?,?,?,?)"
+        let queryusers = mysql.format(insertQuery,[data.TipoUsuario,data.Cedula,data.Nombre,data.Apellido1,data.Apellido2,data.FechaNacimiento,data.Edad,data.Email,Password,data.EsquemaVacunacion]);
+
+    connection.query(queryusers,function(err,result){
+        if(err) throw err;
+        emailPassword(data,Password);
+        callback(result);
+    })
+}
+
+
 function InsertUsuario(connection,data,callback){
-    
-    let insertQuery =
+    let insertQuery =   
         "INSERT INTO Usuario (TipoUsuario,NumeroCedula,Nombre,Apellido1,Apellido2,FechaNacimiento,Edad,Email,Password,EsquemaVacunacion) VALUES (?,?,?,?,?,?,?,?,?,?)"
         let queryusers = mysql.format(insertQuery,[data.TipoUsuario,data.Cedula,data.Nombre,data.Apellido1,data.Apellido2,data.FechaNacimiento,data.Edad,data.Email,data.Password,data.EsquemaVacunacion]);
 
@@ -287,4 +331,4 @@ function GetsPeliculasxGenero(connection,data,callback){
 
 module.exports = {Login,InsertUsuario,InsertPelicula,InsertPeliculaxGenero,InsertGenero,GetsGenero,InsertIdioma,GetsIdioma,InsertActor,
     GetsActor,InsertPeliculaxGenero,GetsPelicula,GetsPeliculasxGenero,getUser,GetPelicula,changePelicula,getUsers,getUserLogin,changeUser,
-    deleteUser,deletePelicula}
+    deleteUser,deletePelicula,registerUsuario}
