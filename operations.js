@@ -99,7 +99,7 @@ function changeUser(connection,data,callback){
     let loginQuery = "UPDATE usuario SET TipoUsuario=?,NumeroCedula=?,Nombre=?,Apellido1=?,Apellido2=?,FechaNacimiento=?,Edad=?,Email=?,Password=?,EsquemaVacunacion=? WHERE idUsuario =? "
     let querylogin = mysql.format(loginQuery,[data.TipoUsuario,data.NumeroCedula,data.Nombre,data.Apellido1,data.Apellido2,data.Apellido1,
         data.Apellido2,data.FechaNacimiento,data.Edad,data.Email,data.Password,data.EsquemaVacunacion,user]);
-    
+    console.log(querylogin);
     connection.query(querylogin,function(err,result){
         if(err) throw err;
 
