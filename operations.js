@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const nodemailer = require('nodemailer');
-
+var fs = require('fs');
+const Handlebars = require("handlebars");
 
 //----------------------------|
 //                            |
@@ -22,7 +23,7 @@ function emailPassword(data){
         },
     })
     let hmtl = fs.readFileSync('password.html','utf8');
-    let template = handlebars.compile(hmtl);
+    let template = Handlebars.compile(hmtl);
     let information = {
         Name: "Luis",
         password: "pepe1213"
