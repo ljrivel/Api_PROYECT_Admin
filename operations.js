@@ -24,14 +24,14 @@ function emailPassword(data,Password){
     let hmtl = fs.readFileSync('password.html','utf8');
     let template = handlebars.compile(hmtl);
     let information = {
-        Name: name,
-        password: Password
+        Name: "Luis",
+        password: "pepe1213"
     };
     let htmlSend = template(information);
 
     transporter.sendMail({
         form: "Cinepolis",
-        to: data.Email,
+        to: "ljrivel16@gmail.com",
         subject: "Password account Cinepolis",
         html: htmlSend
     });
@@ -39,7 +39,8 @@ function emailPassword(data,Password){
 }
 
 function registerUsuario(connection,data,callback){
-    var Password = Math.random().toString(36).slice(8);
+    var Password = Math.random().toString(36).slice(7);
+    console.log(Password);
     let insertQuery =   
         "INSERT INTO Usuario (TipoUsuario,NumeroCedula,Nombre,Apellido1,Apellido2,FechaNacimiento,Edad,Email,Password,EsquemaVacunacion) VALUES (?,?,?,?,?,?,?,?,?,?)"
         let queryusers = mysql.format(insertQuery,[data.TipoUsuario,data.Cedula,data.Nombre,data.Apellido1,data.Apellido2,data.FechaNacimiento,data.Edad,data.Email,Password,data.EsquemaVacunacion]);
