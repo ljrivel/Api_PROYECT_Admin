@@ -11,7 +11,7 @@ const nodemailer = require('nodemailer');
 
 
 
-function emailPassword(data,Password){
+function emailPassword(data){
     var name = data.Nombre + " " + data.Apellido1
     let transporter = nodemailer.transporter({
         host: "smtp.gmail.com",
@@ -39,15 +39,13 @@ function emailPassword(data,Password){
 }
 
 function registerUsuario(connection,data,callback){
-    var Password = Math.random().toString(36).slice(7);
-    console.log(Password);
     let insertQuery =   
         "INSERT INTO Usuario (TipoUsuario,NumeroCedula,Nombre,Apellido1,Apellido2,FechaNacimiento,Edad,Email,Password,EsquemaVacunacion) VALUES (?,?,?,?,?,?,?,?,?,?)"
-        let queryusers = mysql.format(insertQuery,[data.TipoUsuario,data.Cedula,data.Nombre,data.Apellido1,data.Apellido2,data.FechaNacimiento,data.Edad,data.Email,Password,data.EsquemaVacunacion]);
+        let queryusers = mysql.format(insertQuery,[data.TipoUsuario,data.Cedula,data.Nombre,data.Apellido1,data.Apellido2,data.FechaNacimiento,data.Edad,data.Email,data.Password,data.EsquemaVacunacion]);
 
     connection.query(queryusers,function(err,result){
         if(err) throw err;
-        emailPassword(data,Password);
+        emailPassword(data);
         callback(result);
     })
 }
