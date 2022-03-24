@@ -13,7 +13,7 @@ const nodemailer = require('nodemailer');
 
 function emailPassword(data){
     var name = data.Nombre + " " + data.Apellido1
-    let transporter = nodemailer.transporter({
+    let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: "587",
         auth:{
