@@ -240,7 +240,7 @@ function deletePelicula(connection,data,callback){
 function InsertProducto(connection,data,callback){
     let insertQuery =   
     "INSERT INTO Producto (Activo,TipoProducto,Nombre,Precio,CantidaEnStock,URL) VALUES (?,?,?,?,?,?)"
-    let queryusers = mysql.format(insertQuery,[data.Activo]);
+    let queryusers = mysql.format(insertQuery,[data.Activo,data.TipoProducto,data.Nombre,data.Precio,data.CantidaEnStock,data.URL]);
 
     connection.query(queryusers,function(err,result){
         if(err) throw err;
