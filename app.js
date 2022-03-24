@@ -156,7 +156,7 @@ app.post("/changePelicula", (req,res) => {
   });
  });
 
- app.post("/getsproducto", (req, res) => {
+ app.get("/getsproducto", (req, res) => {
  getsProducto(connection,result =>{
    res.json(result);
  });
