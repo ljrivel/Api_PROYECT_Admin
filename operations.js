@@ -190,15 +190,6 @@ function GetPelicula(connection,data,callback){
 }
 
 
-function GetCartelera(connection,callback){
-    let insertQuery = "SELECT  P.Titulo,P.idPelicula,P.Generos,P.URL FROM Cartelera C INNER JOIN Pelicula P ON P.idPelicula = C.idPelicula WHERE TIMESTAMPDIFF(MINUTE, NOW(), C.Inicio) > 0"
-    let queryGenero = mysql.format(insertQuery)
-
-    connection.query(queryGenero,function(err,result){
-        if(err) throw err;
-        callback(result);
-    })
-}
 
 
 function changePelicula(connection,data,callback){
@@ -250,7 +241,7 @@ function InsertProducto(connection,data,callback){
 
 function changeProducto(connection,data,callback){
     let insertQuery =   
-    "UPdate Producto set Activo=?,TipoProducto=?,Nombre=?,Precio=?,CantidadEnStock=?,URL=? where idProducto=?"
+    "UPdate Producto Activo=?,TipoProducto=?,Nombre=?,Precio=?,CantidadEnStock=?,URL=? where idProducto=?"
     let queryusers = mysql.format(insertQuery,[data.Activo,data.TipoProducto,data.Nombre,data.Precio,data.CantidadEnStock,data.URL,data.idProducto]);
 
     connection.query(queryusers,function(err,result){
@@ -334,7 +325,37 @@ function deleteProducto(connection,data,callback){
 }
 
 
+//-----------------------------|
+//                             |
+// Funciones de tabla Cartelera|
+//                             |
+//-----------------------------|
+
+
+function GetCartelera(connection,callback){
+    let insertQuery = "SELECT  P.Titulo,P.idPelicula,P.Generos,P.URL FROM Cartelera C INNER JOIN Pelicula P ON P.idPelicula = C.idPelicula WHERE TIMESTAMPDIFF(MINUTE, NOW(), C.Inicio) > 0"
+    let queryGenero = mysql.format(insertQuery)
+
+    connection.query(queryGenero,function(err,result){
+        if(err) throw err;
+        callback(result);
+    })
+}
+
+function addCartelera(connection,data,callback){
+    let loginQuery = "call AgregarCartelera(?,?,?)"
+    let querylogin = mysql.format(loginQuery,[data.id,data.sala,data.fecha]);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+}
+
+
 
 module.exports = {Login,InsertUsuario,InsertPelicula,GetsPelicula,getUser,GetPelicula,changePelicula,getUsers,getUserLogin,changeUser,
     deleteUser,deletePelicula,registerUsuario,getsProducto,deleteProducto,getProductoBebida,getProductoCombo,getProductoComida,InsertProducto,
-    changeProducto,getProducto,GetCartelera}
+    changeProducto,getProducto,GetCartelera,addCartelera}
