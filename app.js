@@ -11,7 +11,7 @@ const {InsertUsuario,Login, InsertPelicula,GetsPelicula,getUser,GetPelicula,
   changePelicula,getUsers,getUserLogin,changeUser,deleteUser,deletePelicula,
   registerUsuario,getsProducto,deleteProducto,getProductoBebida,getProductoCombo,
   getProductoComida,InsertProducto,changeProducto,getProducto,GetCartelera,
-  addCartelera} = require("./operations");
+  addCartelera,asientosLibres,asientosCartelera,compraBoletos,compraProductos} = require("./operations");
 
 const cors=require("cors");
 const corsOptions ={
@@ -188,6 +188,7 @@ app.post("/changePelicula", (req,res) => {
   });
  });
  
+ //cartelera
  
  app.post("/addcartelera", (req, res) => {
   const body = req.body
@@ -196,7 +197,36 @@ app.post("/changePelicula", (req,res) => {
   });
  });
 
+ 
+ app.post("/asientoslibres", (req, res) => {
+  const body = req.body
+  asientosLibres(connection,body,result =>{
+    res.json(result);
+  });
+ });
 
+ app.post("/asientosCartelera", (req, res) => {
+  const body = req.body
+  asientosCartelera(connection,body,result =>{
+    res.json(result);
+  });
+ });
+
+//compra
+
+app.post("/compraboletos", (req, res) => {
+  const body = req.body
+  compraBoletos(connection,body,result =>{
+    res.json(result);
+  });
+ });
+
+ app.post("/compraproductos", (req, res) => {
+  const body = req.body
+  compraProductos(connection,body,result =>{
+    res.json(result);
+  });
+ });
 
 app.listen(port, () => {
   console.log(`Servidor en puerto ${port}`);

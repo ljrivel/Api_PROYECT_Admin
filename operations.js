@@ -333,7 +333,7 @@ function deleteProducto(connection,data,callback){
 
 
 function GetCartelera(connection,callback){
-    let insertQuery = "SELECT  P.Titulo,P.idPelicula,P.Generos,P.URL FROM Cartelera C INNER JOIN Pelicula P ON P.idPelicula = C.idPelicula WHERE TIMESTAMPDIFF(MINUTE, NOW(), C.Inicio) > 0"
+    let insertQuery = "SELECT C.idCartelera P.Titulo,P.idPelicula,P.Generos,P.URL FROM Cartelera C INNER JOIN Pelicula P ON P.idPelicula = C.idPelicula WHERE TIMESTAMPDIFF(MINUTE, NOW(), C.Inicio) > 0"
     let queryGenero = mysql.format(insertQuery)
 
     connection.query(queryGenero,function(err,result){
@@ -354,8 +354,63 @@ function addCartelera(connection,data,callback){
     })
 }
 
+function asientosLibres(connection,data,callback){
+    let loginQuery = "call ObtenerCantidadDeAsientosLibres(?)"
+    let querylogin = mysql.format(loginQuery,[data.id]);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+}
+
+function asientosCartelera(connection,data,callback){
+    let loginQuery = "call ObtenerAsientosXCartelera(?)"
+    let querylogin = mysql.format(loginQuery,[data.id]);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+   
+}
+
+//-----------------------------|
+//                             |
+// Funciones de Compra         |
+//                             |
+//-----------------------------|
+
+function compraProductos(connection,data,callback){
+    let loginQuery = "call AgregarCompraProductos(?,?,?)"
+    let querylogin = mysql.format(loginQuery,[data.id,data.precio,data.productos]);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+}
+
+function compraBoletos(connection,data,callback){
+    let loginQuery = "call AgregarCompraBoletos(?,?,?,?)"
+    let querylogin = mysql.format(loginQuery,[data.idU,data.idC,data.precio,data.boletos]);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+}
+
 
 
 module.exports = {Login,InsertUsuario,InsertPelicula,GetsPelicula,getUser,GetPelicula,changePelicula,getUsers,getUserLogin,changeUser,
     deleteUser,deletePelicula,registerUsuario,getsProducto,deleteProducto,getProductoBebida,getProductoCombo,getProductoComida,InsertProducto,
-    changeProducto,getProducto,GetCartelera,addCartelera}
+    changeProducto,getProducto,GetCartelera,addCartelera,asientosLibres,asientosCartelera,compraBoletos,compraProductos}
