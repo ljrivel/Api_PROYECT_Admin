@@ -333,7 +333,7 @@ function deleteProducto(connection,data,callback){
 
 
 function GetCartelera(connection,callback){
-    let insertQuery = "SELECT C.idCartelera P.Titulo,P.idPelicula,P.Generos,P.URL FROM Cartelera C INNER JOIN Pelicula P ON P.idPelicula = C.idPelicula WHERE TIMESTAMPDIFF(MINUTE, NOW(), C.Inicio) > 0"
+    let insertQuery = "SELECT C.idCartelera, P.Titulo,P.idPelicula,P.Generos,P.URL FROM Cartelera C INNER JOIN Pelicula P ON P.idPelicula = C.idPelicula WHERE TIMESTAMPDIFF(MINUTE, NOW(), C.Inicio) > 0"
     let queryGenero = mysql.format(insertQuery)
 
     connection.query(queryGenero,function(err,result){
