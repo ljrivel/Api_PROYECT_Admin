@@ -333,7 +333,7 @@ function deleteProducto(connection,data,callback){
 
 
 function GetCartelera(connection,callback){
-    let insertQuery = "SELECT C.idCartelera, P.Titulo,P.idPelicula,P.Generos,P.URL FROM Cartelera C INNER JOIN Pelicula P ON P.idPelicula = C.idPelicula WHERE TIMESTAMPDIFF(MINUTE, NOW(), C.Inicio) > 0"
+    let insertQuery = "SELECT C.idCartelera,P.Titulo,P.idPelicula,P.Generos,P.URL FROM Cartelera C INNER JOIN Pelicula P ON P.idPelicula = C.idPelicula WHERE TIMESTAMPDIFF(MINUTE, NOW(), C.Inicio) > 0"
     let queryGenero = mysql.format(insertQuery)
 
     connection.query(queryGenero,function(err,result){
@@ -388,13 +388,15 @@ function asientosCartelera(connection,data,callback){
 function compraProductos(connection,data,callback){
     let loginQuery = "call AgregarCompraProductos(?,?,?)"
     let querylogin = mysql.format(loginQuery,[data.id,data.precio,data.productos]);
+    console.log(data.productos);
+    console.log(data.productos[0]);
     
-    connection.query(querylogin,function(err,result){
-        if(err) throw err;
+    //connection.query(querylogin,function(err,result){
+   //     if(err) throw err;
 
-        callback(result);
+   //     callback(result);
 
-    })
+   // })
 }
 
 function compraBoletos(connection,data,callback){
