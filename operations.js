@@ -389,14 +389,12 @@ function compraProductos(connection,data,callback){
     let loginQuery = "call AgregarCompraProductos(?,?,?)"
     let querylogin = mysql.format(loginQuery,[data.id,data.precio,data.productos]);
     console.log(data.productos);
-    console.log(data.productos[0]);
-    
-    //connection.query(querylogin,function(err,result){
-   //     if(err) throw err;
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
 
-   //     callback(result);
+        callback(result);
 
-   // })
+    })
 }
 
 function compraBoletos(connection,data,callback){
