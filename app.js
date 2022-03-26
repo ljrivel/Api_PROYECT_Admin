@@ -12,7 +12,7 @@ const {InsertUsuario,Login, InsertPelicula,GetsPelicula,getUser,GetPelicula,
   registerUsuario,getsProducto,deleteProducto,getProductoBebida,getProductoCombo,
   getProductoComida,InsertProducto,changeProducto,getProducto,GetCartelera,
   addCartelera,asientosLibres,asientosCartelera,compraBoletos,compraProductos,getHistorial,
-  getCompra} = require("./operations");
+  getCompra,pdfBoletos,pdfComida} = require("./operations");
 
 const cors=require("cors");
 const corsOptions ={
@@ -244,6 +244,19 @@ app.post("/compraboletos", (req, res) => {
     res.json(result);
   });
  });
+
+//pdf
+
+app.post("/pdfComida", (req, res) => {
+  const body = req.body
+  pdfComida(body);
+ });
+
+ app.post("/pdfBoletos", (req, res) => {
+  const body = {EntradaAdultos: '2', EntradaMayores: '1', EntradaNinos: '0', Asientos: '32-22',PrecioTotal:'9000'}
+  pdfBoletos(body);
+ });
+
 
 app.listen(port, () => {
   console.log(`Servidor en puerto ${port}`);

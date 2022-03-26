@@ -1,7 +1,38 @@
 const mysql = require('mysql');
+const {facturaPeliculas,facturaComida} = require("./pdf");
 const nodemailer = require('nodemailer');
+const fonts = require("./fonts");
+const PdfPrinter = require("pdfmake");
 var fs = require('fs');
 const Handlebars = require("handlebars");
+
+
+
+
+//----------------------------|
+//                            |
+// Funciones crear pdf        |
+//                            |
+//----------------------------|
+
+function pdfComida(data){
+    const printer2 = new PdfPrinter(fonts);
+    let pdfDoc2 = printer2.createPdfKitDocument(facturaComida(data.Nombre, data.Cantidad, data.PrecioTotal));
+    pdfDoc2.pipe(fs.createWriteStream("pdfComida.pdf"));
+    pdfDoc2.end();
+}
+
+function pdfBoletos(data){
+    
+    const printer = new PdfPrinter(fonts);
+    let pdfDoc = printer.createPdfKitDocument(facturaPeliculas(data.EntradaAdultos,data.EntradaMayores,data.EntradaNinos,data.Asientos,data.PrecioTotal));
+    pdfDoc.pipe(fs.createWriteStream("pdfPelicula.pdf"));
+    pdfDoc.end();
+
+}
+
+
+
 
 //----------------------------|
 //                            |
@@ -438,4 +469,4 @@ function getCompra(connection,data,callback){
 module.exports = {Login,InsertUsuario,InsertPelicula,GetsPelicula,getUser,GetPelicula,changePelicula,getUsers,getUserLogin,changeUser,
     deleteUser,deletePelicula,registerUsuario,getsProducto,deleteProducto,getProductoBebida,getProductoCombo,getProductoComida,InsertProducto,
     changeProducto,getProducto,GetCartelera,addCartelera,asientosLibres,asientosCartelera,compraBoletos,compraProductos,getHistorial,
-    getCompra}
+    getCompra,pdfBoletos,pdfComida}
