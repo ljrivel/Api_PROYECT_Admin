@@ -252,7 +252,7 @@ app.post("/pdfComida", (req, res) => {
   pdfComida(body);
  });
 
- app.post("/pdfBoletos", (req, res) => {
+ app.get("/pdfBoletos", (req, res) => {
   const body = {EntradaAdultos: '2', EntradaMayores: '1', EntradaNinos: '0', Asientos: '32-22',PrecioTotal:'9000'}
   pdfBoletos(body);
  });
