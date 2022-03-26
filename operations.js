@@ -387,8 +387,8 @@ function asientosCartelera(connection,data,callback){
 
 function compraProductos(connection,data,callback){
     
-    let loginQuery = "call AgregarCompraProductos(?,?,?)"
-    let querylogin = mysql.format(loginQuery,[data.id,data.precio,data]);
+    let loginQuery = "call AgregarCompraProductos(?,?,?,?)"
+    let querylogin = mysql.format(loginQuery,[data.id,data.precio,data.productos,data.cantidad]);
  
     connection.query(querylogin,function(err,result){
         if(err) throw err;
