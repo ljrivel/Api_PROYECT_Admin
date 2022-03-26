@@ -388,8 +388,7 @@ function asientosCartelera(connection,data,callback){
 function compraProductos(connection,data,callback){
     
     let loginQuery = "call AgregarCompraProductos(?,?,?)"
-    let pro = JSON.stringify(data.productos) ;
-    let querylogin = mysql.format(loginQuery,[data.id,data.precio,pro]);
+    let querylogin = mysql.format(loginQuery,[data.id,data.precio,data]);
  
     connection.query(querylogin,function(err,result){
         if(err) throw err;
@@ -400,8 +399,8 @@ function compraProductos(connection,data,callback){
 }
 
 function compraBoletos(connection,data,callback){
-    let loginQuery = "call AgregarCompraBoletos(?,?,?,?)"
-    let querylogin = mysql.format(loginQuery,[data.idU,data.idC,data.precio,data.boletos]);
+    let loginQuery = "call AgregarCompraBoletos(?,?,?,?,?)"
+    let querylogin = mysql.format(loginQuery,[data.idU,data.idC,data.precio,data.boletos,data.cantidad]);
     
     connection.query(querylogin,function(err,result){
         if(err) throw err;
