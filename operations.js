@@ -389,7 +389,6 @@ function compraProductos(connection,data,callback){
     
     let loginQuery = "call AgregarCompraProductos(?,?,?)"
     let pro = JSON.stringify(data.productos) ;
-    console.log(pro);
     let querylogin = mysql.format(loginQuery,[data.id,data.precio,pro]);
  
     connection.query(querylogin,function(err,result){
@@ -412,8 +411,32 @@ function compraBoletos(connection,data,callback){
     })
 }
 
+function getHistorial(connection,data,callback){
+    let loginQuery = "call  GetHistorialCompras(?)"
+    let querylogin = mysql.format(loginQuery,[data.id]);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+}
+
+function getCompra(connection,data,callback){
+    let loginQuery = "call  GetDetallesCompra(?)"
+    let querylogin = mysql.format(loginQuery,[data.id]);
+    
+    connection.query(querylogin,function(err,result){
+        if(err) throw err;
+
+        callback(result);
+
+    })
+}
 
 
 module.exports = {Login,InsertUsuario,InsertPelicula,GetsPelicula,getUser,GetPelicula,changePelicula,getUsers,getUserLogin,changeUser,
     deleteUser,deletePelicula,registerUsuario,getsProducto,deleteProducto,getProductoBebida,getProductoCombo,getProductoComida,InsertProducto,
-    changeProducto,getProducto,GetCartelera,addCartelera,asientosLibres,asientosCartelera,compraBoletos,compraProductos}
+    changeProducto,getProducto,GetCartelera,addCartelera,asientosLibres,asientosCartelera,compraBoletos,compraProductos,getHistorial,
+    getCompra}

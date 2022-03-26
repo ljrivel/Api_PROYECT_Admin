@@ -11,7 +11,8 @@ const {InsertUsuario,Login, InsertPelicula,GetsPelicula,getUser,GetPelicula,
   changePelicula,getUsers,getUserLogin,changeUser,deleteUser,deletePelicula,
   registerUsuario,getsProducto,deleteProducto,getProductoBebida,getProductoCombo,
   getProductoComida,InsertProducto,changeProducto,getProducto,GetCartelera,
-  addCartelera,asientosLibres,asientosCartelera,compraBoletos,compraProductos} = require("./operations");
+  addCartelera,asientosLibres,asientosCartelera,compraBoletos,compraProductos,getHistorial,
+  getCompra} = require("./operations");
 
 const cors=require("cors");
 const corsOptions ={
@@ -224,6 +225,22 @@ app.post("/compraboletos", (req, res) => {
  app.post("/compraproductos", (req, res) => {
   const body = req.body
   compraProductos(connection,body,result =>{
+    res.json(result);
+  });
+ });
+
+
+ app.post("/getHistorial", (req, res) => {
+  const body = req.body
+  getHistorial(connection,body,result =>{
+    res.json(result);
+  });
+ });
+
+
+ app.post("/getCompra", (req, res) => {
+  const body = req.body
+  getCompra(connection,body,result =>{
     res.json(result);
   });
  });
