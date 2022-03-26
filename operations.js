@@ -386,8 +386,10 @@ function asientosCartelera(connection,data,callback){
 //-----------------------------|
 
 function compraProductos(connection,data,callback){
+    
     let loginQuery = "call AgregarCompraProductos(?,?,?)"
     let pro = JSON.stringify(data.productos) ;
+    console.log(pro);
     let querylogin = mysql.format(loginQuery,[data.id,data.precio,pro]);
  
     connection.query(querylogin,function(err,result){
