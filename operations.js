@@ -6,7 +6,14 @@ const PdfPrinter = require("pdfmake");
 var fs = require('fs');
 const Handlebars = require("handlebars");
 
-
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: "587",
+    auth:{
+        user: "thanosmoraproject@gmail.com",
+        pass: "qhasodoqjzikiysn"
+    },
+})
 
 
 //----------------------------|
@@ -15,11 +22,21 @@ const Handlebars = require("handlebars");
 //                            |
 //----------------------------|
 
-function pdfComida(data){
+function pdfComida(){
     const printer2 = new PdfPrinter(fonts);
-    let pdfDoc2 = printer2.createPdfKitDocument(facturaComida(data.Nombre, data.Cantidad, data.PrecioTotal));
+    let pdfDoc2 = printer2.createPdfKitDocument(facturaComida("Pepinillo", '2', '2000'));
     pdfDoc2.pipe(fs.createWriteStream("pdfComida.pdf"));
     pdfDoc2.end();
+
+    transporter.sendMail({
+        form: "Cinepolis",
+        to: "ljrivel16@gmail.com",
+        subject: "Password account Cinepolis",
+        html: htmlSend,
+        attachments: [
+            {filename: "pdfComida.pdf", path:"pdfComida.pdf"}
+        ]
+    });
 }
 
 function pdfBoletos(data){
@@ -45,14 +62,7 @@ function pdfBoletos(data){
 
 function emailPassword(data){
     var name = data.Nombre + " " + data.Apellido1
-    let transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: "587",
-        auth:{
-            user: "thanosmoraproject@gmail.com",
-            pass: "qhasodoqjzikiysn"
-        },
-    })
+
     let hmtl = fs.readFileSync('password.html','utf8');
     let template = Handlebars.compile(hmtl);
     let information = {
@@ -423,7 +433,7 @@ function compraProductos(connection,data,callback){
  
     connection.query(querylogin,function(err,result){
         if(err) throw err;
-
+        pdfComida();
         callback(result);
 
     })
