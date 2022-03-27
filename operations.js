@@ -461,7 +461,7 @@ function compraBoletos(connection,data,callback){
         if(err) throw err;
 
         if(result[0][0]['Mensaje'] == 'Se agregó correctamente'){
-            pdfComida(data.pdf);
+            pdfBoletos(data.pdf);
         }
 
         callback(result);
