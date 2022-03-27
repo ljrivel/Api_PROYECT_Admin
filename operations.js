@@ -460,7 +460,7 @@ function compraBoletos(connection,data,callback){
     connection.query(querylogin,function(err,result){
         if(err) throw err;
 
-        if(result[0][0]['Mensaje'] == 'Se agregó exitosamente'){
+        if(result[0][0]['Mensaje'] == 'Se agregó correctamente'){
             pdfComida(data.pdf);
         }
 
