@@ -27,7 +27,7 @@ let docDefinition1 = {
         {text: "Entradas Niños:                                      " + EntradaNinos, style: "subheader"},
         {text: ".", style: "separador"},
         {text: ".", style: "separador"},
-        {text: "Asientos: ", style: "subheader"},
+        {text: "Numero de Asientos: ", style: "subheader"},
         {text: ".", style: "separador"},
         {text: ".", style: "separador"},
         {text: Asientos, style: header },

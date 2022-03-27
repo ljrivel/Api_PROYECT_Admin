@@ -23,7 +23,7 @@ const transporter = nodemailer.createTransport({
 //----------------------------|
 
 function pdfComida(data){
-    console.log(data);
+
     const printer2 = new PdfPrinter(fonts);
     let pdfDoc2 = printer2.createPdfKitDocument(facturaComida(data.Nombre,data.Cantidad,data.Precio));
     pdfDoc2.pipe(fs.createWriteStream("pdfComida.pdf"));
@@ -40,7 +40,6 @@ function pdfComida(data){
 }
 
 function pdfBoletos(data){
-    
     const printer = new PdfPrinter(fonts);
     let pdfDoc = printer.createPdfKitDocument(facturaPeliculas(data.EntradaAdultos,data.EntradaMayores,data.EntradaNinos,data.Asientos,data.PrecioTotal));
     pdfDoc.pipe(fs.createWriteStream("pdfPelicula.pdf"));
