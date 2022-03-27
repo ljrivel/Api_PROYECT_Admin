@@ -22,16 +22,17 @@ const transporter = nodemailer.createTransport({
 //                            |
 //----------------------------|
 
-function pdfComida(){
+function pdfComida(data){
+    console.log(data);
     const printer2 = new PdfPrinter(fonts);
-    let pdfDoc2 = printer2.createPdfKitDocument(facturaComida("Pepinillo", '2', '2000'));
+    let pdfDoc2 = printer2.createPdfKitDocument(facturaComida(data.Nombre,data.Cantidad,data.Precio));
     pdfDoc2.pipe(fs.createWriteStream("pdfComida.pdf"));
     pdfDoc2.end();
 
     transporter.sendMail({
         form: "Cinepolis",
-        to: "ljrivel16@gmail.com",
-        subject: "Password account Cinepolis",
+        to: data.Email,
+        subject: "Factura de  Comida",
         attachments: [
             {filename: "pdfComida.pdf", path:"pdfComida.pdf"}
         ]
@@ -44,6 +45,15 @@ function pdfBoletos(data){
     let pdfDoc = printer.createPdfKitDocument(facturaPeliculas(data.EntradaAdultos,data.EntradaMayores,data.EntradaNinos,data.Asientos,data.PrecioTotal));
     pdfDoc.pipe(fs.createWriteStream("pdfPelicula.pdf"));
     pdfDoc.end();
+
+    transporter.sendMail({
+        form: "Cinepolis",
+        to: data.Email,
+        subject: "Factura de Boletos",
+        attachments: [
+            {filename: "pdfPelicula.pdf", path:"pdfPelicula.pdf"}
+        ]
+    });
 
 }
 
@@ -432,7 +442,11 @@ function compraProductos(connection,data,callback){
  
     connection.query(querylogin,function(err,result){
         if(err) throw err;
-        pdfComida();
+
+        if(result == 'Se agregó exitosamente'){
+            pdfComida(data.pdf);
+        }
+        
         callback(result);
 
     })
@@ -444,6 +458,10 @@ function compraBoletos(connection,data,callback){
     
     connection.query(querylogin,function(err,result){
         if(err) throw err;
+
+        if(result == 'Se agregó exitosamente'){
+            pdfComida(data.pdf);
+        }
 
         callback(result);
 
