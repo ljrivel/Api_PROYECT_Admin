@@ -443,10 +443,9 @@ function compraProductos(connection,data,callback){
     connection.query(querylogin,function(err,result){
         if(err) throw err;
 
-        console.log(result);
-        console.log(result[0]);
-        console.log(result[0][0]['RowDataPacket']);
-        console.log(result[0][0]['RowDataPacket']['Mensaje']);
+
+        console.log(result[0][0]);
+
         if(result[0] == 'Se agregó exitosamente'){
             pdfComida(data.pdf);
         }
