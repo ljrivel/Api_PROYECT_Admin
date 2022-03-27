@@ -443,6 +443,7 @@ function compraProductos(connection,data,callback){
     connection.query(querylogin,function(err,result){
         if(err) throw err;
 
+        console.log(result);
         if(result == 'Se agregó exitosamente'){
             pdfComida(data.pdf);
         }
