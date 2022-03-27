@@ -444,7 +444,8 @@ function compraProductos(connection,data,callback){
         if(err) throw err;
 
 
-        console.log(result[0][0]['RowDataPacket']);
+        console.log(result[0][0]);
+        console.log(result[0][0]['Mensaje']);
 
         if(result[0] == 'Se agregó exitosamente'){
             pdfComida(data.pdf);
