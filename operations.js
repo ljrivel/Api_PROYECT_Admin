@@ -291,7 +291,7 @@ function InsertProducto(connection,data,callback){
 
 function changeProducto(connection,data,callback){
     let insertQuery =   
-    "UPdate Producto Activo=?,TipoProducto=?,Nombre=?,Precio=?,CantidadEnStock=?,URL=? where idProducto=?"
+    "Update Producto TipoProducto=?,Nombre=?,Precio=?,CantidadEnStock=?,URL=? where idProducto=?"
     let queryusers = mysql.format(insertQuery,[data.Activo,data.TipoProducto,data.Nombre,data.Precio,data.CantidadEnStock,data.URL,data.idProducto]);
 
     connection.query(queryusers,function(err,result){
