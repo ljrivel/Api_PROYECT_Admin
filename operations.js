@@ -444,7 +444,7 @@ function compraProductos(connection,data,callback){
         if(err) throw err;
 
         console.log(result);
-        if(result == 'Se agregó exitosamente'){
+        if(result[0]['Mensaje'] == 'Se agregó exitosamente'){
             pdfComida(data.pdf);
         }
         
@@ -460,7 +460,7 @@ function compraBoletos(connection,data,callback){
     connection.query(querylogin,function(err,result){
         if(err) throw err;
 
-        if(result == 'Se agregó exitosamente'){
+        if(result[0]['Mensaje'] == 'Se agregó exitosamente'){
             pdfComida(data.pdf);
         }
 
