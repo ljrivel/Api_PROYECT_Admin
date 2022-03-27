@@ -292,7 +292,7 @@ function InsertProducto(connection,data,callback){
 function changeProducto(connection,data,callback){
     let insertQuery =   
     "Update Producto TipoProducto=?,Nombre=?,Precio=?,CantidadEnStock=?,URL=? where idProducto=?"
-    let queryusers = mysql.format(insertQuery,[data.Activo,data.TipoProducto,data.Nombre,data.Precio,data.CantidadEnStock,data.URL,data.idProducto]);
+    let queryusers = mysql.format(insertQuery,[data.TipoProducto,data.Nombre,data.Precio,data.CantidadEnStock,data.URL,data.idProducto]);
 
     connection.query(queryusers,function(err,result){
         if(err) throw err;
