@@ -32,7 +32,6 @@ function pdfComida(){
         form: "Cinepolis",
         to: "ljrivel16@gmail.com",
         subject: "Password account Cinepolis",
-        html: htmlSend,
         attachments: [
             {filename: "pdfComida.pdf", path:"pdfComida.pdf"}
         ]
