@@ -208,8 +208,8 @@ function changeUser(connection,data,callback){
 
 function InsertPelicula(connection,data,callback){
     let insertQuery =
-        "INSERT INTO Pelicula (Titulo,Director,YearPublicacion,EdadRequerida,URL,Generos,Actores,Duracion,Activo) VALUES (?,?,?,?,?,?,?,?,?)"
-        let queryPeli = mysql.format(insertQuery,[data.Titulo,data.Director,data.YearPublicacion,data.EdadRequerida,data.URL,data.Generos,data.Actores,data.Duracion,data.Activo]);
+        "INSERT INTO Pelicula (Titulo,Director,YearPublicacion,EdadRequerida,URL,Generos,Actores,Duracion,Activo,Idiomas) VALUES (?,?,?,?,?,?,?,?,?)"
+        let queryPeli = mysql.format(insertQuery,[data.Titulo,data.Director,data.YearPublicacion,data.EdadRequerida,data.URL,data.Generos,data.Actores,data.Duracion,data.Activo,data.Idiomas]);
         connection.query(queryPeli,function(err,result){
             if(err) throw err;
             callback(result);
